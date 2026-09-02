@@ -1,0 +1,86 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.uid == 'admin1' ||
+        (request.auth.token != null && request.auth.token.email == 'admin@brizx.in') ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+    
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+    
+    function incoming() {
+      return request.resource.data;
+    }
+    
+    function existing() {
+      return resource.data;
+    }
+
+    // Default Deny Rules
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Seeker Profile Documents (/seekers/{userId})
+    match /seekers/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create, update: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+    }
+
+    // User Credentials & Account Documents (/users/{userId})
+    match /users/{userId} {
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isSignedIn() && isAdmin();
+      allow create, update: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Connection Requests (/connectionRequests/{requestId})
+    match /connectionRequests/{requestId} {
+      allow read: if isSignedIn() && (request.auth.uid == resource.data.brandId || request.auth.uid == resource.data.seekerId || isAdmin());
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (request.auth.uid == resource.data.brandId || request.auth.uid == resource.data.seekerId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Meetings (/meetings/{meetingId})
+    match /meetings/{meetingId} {
+      allow read: if isSignedIn() && (request.auth.uid == resource.data.brandId || request.auth.uid == resource.data.seekerId || isAdmin());
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (request.auth.uid == resource.data.brandId || request.auth.uid == resource.data.seekerId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Franchise Applications (/applications/{applicationId})
+    match /applications/{applicationId} {
+      allow read: if isSignedIn() && (request.auth.uid == resource.data.brandId || request.auth.uid == resource.data.assignedBrandOwnerId || isAdmin());
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (request.auth.uid == resource.data.brandId || request.auth.uid == resource.data.assignedBrandOwnerId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Brand Profiles (/brands/{brandId})
+    match /brands/{brandId} {
+      allow read: if true;
+      allow create, update, delete: if isSignedIn() && (request.auth.uid == brandId || isAdmin());
+    }
+  }
+}

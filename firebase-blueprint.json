@@ -1,0 +1,90 @@
+{
+  "entities": {
+    "seeker": {
+      "title": "Franchise Seeker Profile",
+      "description": "Authenticated Franchise Seeker profile containing personal credentials, investment preferences, and saved brands",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique Seeker UID matching Firebase Auth UID" },
+        "name": { "type": "string", "maxLength": 100, "description": "Seeker full name" },
+        "email": { "type": "string", "format": "email", "maxLength": 150, "description": "Seeker email address" },
+        "role": { "type": "string", "enum": ["FRANCHISE_SEEKER"], "description": "User account role" },
+        "phone": { "type": "string", "maxLength": 20, "description": "Mobile number" },
+        "whatsApp": { "type": "string", "maxLength": 20, "description": "WhatsApp contact number" },
+        "dob": { "type": "string", "maxLength": 15, "description": "Date of birth (YYYY-MM-DD)" },
+        "gender": { "type": "string", "maxLength": 15, "description": "Gender" },
+        "address": { "type": "string", "maxLength": 250, "description": "Street address" },
+        "city": { "type": "string", "maxLength": 100, "description": "Primary city" },
+        "state": { "type": "string", "maxLength": 100, "description": "State" },
+        "pincode": { "type": "string", "maxLength": 10, "description": "Postal pincode" },
+        "country": { "type": "string", "maxLength": 50, "description": "Country" },
+        "linkedInUrl": { "type": "string", "maxLength": 200, "description": "LinkedIn profile link" },
+        "bio": { "type": "string", "maxLength": 1000, "description": "Professional summary" },
+        "experience": { "type": "string", "maxLength": 1000, "description": "Business & franchise experience" },
+        "avatar": { "type": "string", "maxLength": 500, "description": "Profile picture URL" },
+        "coverPhoto": { "type": "string", "maxLength": 500, "description": "Cover background image URL" },
+        "investment": { "type": "number", "description": "Investment capacity in Lakhs" },
+        "minInvestment": { "type": "number", "description": "Minimum investment budget in Lakhs" },
+        "maxInvestment": { "type": "number", "description": "Maximum investment budget in Lakhs" },
+        "availableCapital": { "type": "number", "description": "Available capital on hand in Lakhs" },
+        "fundingSource": { "type": "string", "maxLength": 200, "description": "Source of capital" },
+        "timeline": { "type": "string", "maxLength": 50, "description": "Investment timeline" },
+        "industry": { "type": "string", "maxLength": 100, "description": "Preferred industry" },
+        "franchiseType": { "type": "string", "maxLength": 100, "description": "Preferred franchise model" },
+        "businessBackground": { "type": "string", "maxLength": 500, "description": "Business background category" },
+        "riskAppetite": { "type": "string", "maxLength": 100, "description": "Risk appetite profile" },
+        "verified": { "type": "boolean", "description": "KYC verification status" },
+        "isPremium": { "type": "boolean", "description": "Premium subscriber status" },
+        "savedBrandIds": { "type": "array", "description": "List of saved brand IDs" },
+        "createdAt": { "type": "string", "description": "Creation ISO timestamp" },
+        "updatedAt": { "type": "string", "description": "Last update ISO timestamp" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "user": {
+      "title": "User Account Document",
+      "description": "User account document stored under users collection",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "brand": {
+      "title": "Brand Profile",
+      "description": "Brand application and verified profile document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique Brand UID" },
+        "brandName": { "type": "string", "maxLength": 100, "description": "Brand title" },
+        "email": { "type": "string", "format": "email", "description": "Contact email" },
+        "role": { "type": "string", "enum": ["BRAND_OWNER"] },
+        "industry": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "applicationStatus": { "type": "string", "enum": ["DRAFT", "PENDING_REVIEW", "UNDER_REVIEW", "APPROVED", "REJECTED", "pending", "approved", "rejected"] },
+        "verifiedAt": { "type": "string" },
+        "reviewedBy": { "type": "string" },
+        "rejectionReason": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "brandName", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/seekers/{userId}": {
+      "schema": "seeker",
+      "description": "Independent seeker profile documents keyed by authenticated user ID"
+    },
+    "/brands/{brandId}": {
+      "schema": "brand",
+      "description": "Brand application and listing profile document"
+    },
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "User authentication and profile mirror document"
+    }
+  }
+}
