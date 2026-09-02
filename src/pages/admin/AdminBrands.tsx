@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router';
 import { useData } from '../../context/DataContext';
 import { useAuth } from '../../context/AuthContext';
 import { AdminBreadcrumbs } from '../../components/admin/AdminBreadcrumbs';
@@ -8,7 +9,7 @@ import { RegistrationStatus, RejectionCategory } from '../../types';
 import { 
   Building2, Search, Filter, ShieldCheck, Star, Edit3, Trash2, Eye, 
   CheckCircle, XCircle, AlertTriangle, ArrowUpDown, ChevronLeft, ChevronRight, 
-  X, Download, Plus, MapPin, IndianRupee, Layers, FileText, Ban, Loader2
+  X, Download, Plus, MapPin, IndianRupee, Layers, FileText, Ban, Loader2, FileSpreadsheet
 } from 'lucide-react';
 import UniversalExportModal from '../../components/admin/UniversalExportModal';
 import { ExportField } from '../../lib/exportService';
@@ -283,6 +284,13 @@ export default function AdminBrands() {
         </div>
 
         <div className="flex flex-wrap gap-2">
+          <Link 
+            to="/admin/bulk-brands"
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+          >
+            <FileSpreadsheet size={14} /> Bulk Brand Listing
+          </Link>
+
           {activeTab === 'ALL_BRANDS' ? (
             <>
               <button 

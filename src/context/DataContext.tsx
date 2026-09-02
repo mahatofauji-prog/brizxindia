@@ -192,6 +192,7 @@ interface DataContextType {
   clearNotification?: (id: string) => void;
   clearAllNotifications: (userId: string) => void;
   updateBrandProfile?: (id: string, data: Partial<Brand>) => void;
+  saveBulkBrands: (brandsToSave: Brand[]) => Promise<{ success: boolean; count: number }>;
   updateBrandBillingDetails: (brandId: string, billing: BrandBillingDetails) => void;
   upgradeSeekerToPremium: (seekerId: string) => void;
   renewSubscription: (brandId: string, plan: 'STARTER' | 'PROFESSIONAL' | 'ENTERPRISE', unlocks: number, price: number, mode: 'UPI' | 'CREDIT_CARD' | 'NET_BANKING') => void;
@@ -902,6 +903,49 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       console.warn('Firestore sync warning in updateBrand:', e);
       throw e;
     }
+  };
+
+  const saveBulkBrands = async (brandsToSave: Brand[]): Promise<{ success: boolean; count: number }> => {
+    if (!brandsToSave || brandsToSave.length === 0) return { success: true, count: 0 };
+
+    setBrands(prev => {
+      const map = new Map<string, Brand>();
+      prev.forEach(b => map.set(b.id, b));
+      brandsToSave.forEach(b => {
+        map.set(b.id, b);
+      });
+      const updated = Array.from(map.values());
+      try {
+        localStorage.setItem('brizx_brands', JSON.stringify(updated));
+      } catch (e) {
+        console.warn('Failed to save brands to localStorage', e);
+      }
+      return updated;
+    });
+
+    try {
+      const { doc, setDoc } = await import('firebase/firestore');
+      const { db } = await import('../lib/firebase');
+      for (const b of brandsToSave) {
+        try {
+          await setDoc(doc(db, 'brands', b.id), b, { merge: true });
+          await setDoc(doc(db, 'users', b.id), {
+            id: b.id,
+            name: b.name || b.brandName,
+            email: b.email,
+            role: 'BRAND_OWNER',
+            verified: true,
+            createdAt: b.createdAt || new Date().toISOString()
+          }, { merge: true });
+        } catch (err) {
+          console.warn(`Firestore save warning for brand ${b.brandName}:`, err);
+        }
+      }
+    } catch (e) {
+      console.warn('Firestore bulk sync warning:', e);
+    }
+
+    return { success: true, count: brandsToSave.length };
   };
 
   const addCRMNote = (note: Omit<CRMNote, 'id' | 'createdAt'>) => {
@@ -2229,6 +2273,7 @@ Open Owner Admin Portal
       clearNotification: deleteNotification,
       clearAllNotifications,
       updateBrandProfile: updateBrand,
+      saveBulkBrands,
       updateBrandBillingDetails,
       upgradeSeekerToPremium, renewSubscription,
       buyCreditPackPayment, processSubscriptionPayment, requestInvoiceRefund,

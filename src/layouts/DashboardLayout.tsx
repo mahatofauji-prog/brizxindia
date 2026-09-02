@@ -186,6 +186,15 @@ export function DashboardLayout() {
             <Building2 size={18} className="shrink-0 text-blue-500" />
             {!isSidebarCollapsed && <span>Brand Directory</span>}
           </Link>
+          <Link to="/admin/bulk-brands" className={navItemClass('/admin/bulk-brands')} title="Bulk Brand Listing">
+            <FileSpreadsheet size={18} className="shrink-0 text-emerald-500" />
+            {!isSidebarCollapsed && (
+              <span className="flex items-center justify-between flex-1 min-w-0">
+                <span>Bulk Listing</span>
+                <span className="bg-emerald-100 text-emerald-800 text-[9px] font-black px-1.5 py-0.5 rounded">SPREADSHEET</span>
+              </span>
+            )}
+          </Link>
           <Link to="/admin/applications" className={navItemClass('/admin/applications')} title="Franchise Applications">
             <FileText size={18} className="shrink-0 text-indigo-500" />
             {!isSidebarCollapsed && <span>Applications</span>}
@@ -336,6 +345,8 @@ export function DashboardLayout() {
     {
       title: 'BRAND MANAGEMENT',
       items: [
+        { label: 'Brand Directory', path: '/admin/brands', icon: Building2, desc: 'Verified brand partners directory' },
+        { label: 'Bulk Brand Listing', path: '/admin/bulk-brands', icon: FileSpreadsheet, desc: 'Excel-style spreadsheet bulk brand creator' },
         { label: 'Brand Approvals', path: '/admin/brands', icon: ShieldCheck, desc: 'Pending listing verification queue' },
         { label: 'Verification Queue', path: '/admin/brands', icon: CheckCircle, desc: 'FDD & legal compliance auditing' },
         { label: 'Featured Brands', path: '/admin/featured', icon: Crown, desc: 'Promoted & sponsored brand listings' },

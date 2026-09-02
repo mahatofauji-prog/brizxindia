@@ -32,6 +32,7 @@ import AdminCommunications from './pages/AdminCommunications';
 import AdminSettings from './pages/AdminSettings';
 import AdminSeekers from './pages/admin/AdminSeekers';
 import AdminBrands from './pages/admin/AdminBrands';
+import AdminBulkBrandListing from './pages/admin/AdminBulkBrandListing';
 import AdminCMS from './pages/admin/AdminCMS';
 import AdminHomePageManagement from './pages/admin/AdminHomePageManagement';
 import AdminNavigationManagement from './pages/admin/AdminNavigationManagement';
@@ -212,6 +213,16 @@ export default function App() {
           <Route path="/admin/brands" element={
             <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
                <AdminBrands />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/bulk-brands" element={
+            <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
+               <AdminBulkBrandListing />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/bulk-brand-listing" element={
+            <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
+               <AdminBulkBrandListing />
             </ProtectedRoute>
           } />
           <Route path="/admin/brand-verification" element={
