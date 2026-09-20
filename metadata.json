@@ -1,0 +1,6 @@
+{
+  "name": "BrizX India",
+  "description": "India's #1 Smart Franchise Intelligence Platform connecting verified franchise seekers with premium brand opportunities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
