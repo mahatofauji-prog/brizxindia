@@ -295,25 +295,25 @@ export default function Home() {
         {/* Subtle dark ambient overlay to ensure white text readability against bright background images */}
         <div className="absolute inset-0 bg-black/40 bg-gradient-to-r from-black/85 via-black/50 to-transparent pointer-events-none z-[1]" />
         
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 flex flex-col items-start justify-center my-auto">
+        <div className="w-full relative z-10 flex flex-col items-start justify-center my-auto pl-2 sm:pl-3 md:pl-4 pr-4 sm:pr-8">
           {/* Hero Main Content */}
-          <div className="flex flex-col items-start text-left max-w-2xl lg:max-w-3xl drop-shadow-2xl">
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 bg-blue-50/95 text-blue-700 text-xs font-black uppercase tracking-wider mb-3 sm:mb-4 lg:mb-5 rounded-full border border-blue-100 shadow-[0_4px_12px_rgba(37,99,235,0.1)] backdrop-blur-md">
-              <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+          <div className="flex flex-col items-start text-left max-w-lg lg:max-w-xl drop-shadow-2xl">
+            <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 bg-blue-50/95 text-blue-700 text-[10px] sm:text-xs font-black uppercase tracking-wider mb-2 sm:mb-2.5 rounded-full border border-blue-100 shadow-[0_4px_12px_rgba(37,99,235,0.1)] backdrop-blur-md">
+              <span className="flex h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
               India's #1 Enterprise Franchise Network
             </div>
             
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[64px] font-black tracking-tight text-white leading-[1.12] mb-3 sm:mb-4 lg:mb-5 uppercase drop-shadow-xl">
+            <h1 className="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-[28px] font-black tracking-tight text-white leading-[1.2] mb-2 sm:mb-2.5 uppercase drop-shadow-xl">
               Smart Franchise Discovery. <br/>
-              <span className="text-white bg-blue-600/95 px-2.5 sm:px-3.5 py-1 rounded-xl sm:rounded-2xl border border-blue-400/40 inline-block mt-1 sm:mt-1.5 shadow-md backdrop-blur-md">Match. Connect. Expand.</span>
+              <span className="text-white bg-blue-600/95 px-2 sm:px-2.5 py-0.5 rounded-lg border border-blue-400/40 inline-block mt-1 shadow-md backdrop-blur-md text-xs sm:text-base md:text-lg lg:text-xl xl:text-[22px]">Match. Connect. Expand.</span>
             </h1>
             
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/95 font-semibold max-w-xl lg:max-w-2xl mb-5 sm:mb-7 lg:mb-8 leading-relaxed drop-shadow-md">
+            <p className="text-[10px] sm:text-xs md:text-sm text-white/95 font-semibold max-w-sm sm:max-w-md mb-3.5 sm:mb-4.5 leading-relaxed drop-shadow-md">
               BrizX India replaces manual brokers with a secure, data-driven match engine. Connect directly with vetted brand founders and pre-screened franchise investors.
             </p>
             
             {/* Action CTAs - Responsive rounded buttons */}
-            <div className="flex flex-wrap sm:flex-row items-center gap-2.5 sm:gap-3.5 w-full sm:w-auto">
+            <div className="flex flex-wrap sm:flex-row items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
               <Link
                 to="/brands"
                 onClick={(e) => {
@@ -326,14 +326,14 @@ export default function Home() {
                     });
                   }
                 }}
-                className="px-4 sm:px-6 py-2.5 sm:py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider rounded-full shadow-[0_12px_24px_-6px_rgba(37,99,235,0.3)] hover:shadow-[0_16px_32px_-4px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-extrabold text-[10px] sm:text-xs uppercase tracking-wider rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-1.5"
               >
                 <span>Find Franchise Opportunities</span>
-                <ArrowRight size={16} strokeWidth={2.5} />
+                <ArrowRight size={13} strokeWidth={2.5} />
               </Link>
               <Link
                 to="/register?role=BRAND_OWNER"
-                className="px-4 sm:px-6 py-2.5 sm:py-3.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-extrabold text-xs sm:text-sm uppercase tracking-wider rounded-full shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-extrabold text-[10px] sm:text-xs uppercase tracking-wider rounded-full shadow-xs hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-1.5"
               >
                 List Your Brand
               </Link>
@@ -341,9 +341,9 @@ export default function Home() {
                 href="https://wa.me/919979510361?text=Hello%20BrizX%20India%2C%20I%20want%20to%20Contact%20on%20WhatsApp."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3.5 sm:px-5 py-2.5 sm:py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider rounded-full shadow-[0_12px_24px_-6px_rgba(16,185,129,0.3)] hover:shadow-[0_16px_32px_-4px_rgba(16,185,129,0.4)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-1.5"
+                className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-[10px] sm:text-xs uppercase tracking-wider rounded-full shadow-xs hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-1"
               >
-                <MessageCircle size={16} strokeWidth={2.5} />
+                <MessageCircle size={13} strokeWidth={2.5} />
                 <span>WhatsApp</span>
               </a>
             </div>
